@@ -5,8 +5,8 @@ import numpy as np
 c = 1
 
 # plotting parameters
-no_rays = 5
-ray_distance = 10
-ray_boundaries = np.array([30, 30])
+no_rays = 1
+ray_distance = .1
+ray_boundaries = np.array([5, 5])
 start_kvector = np.array([1, 0])
-step = 1e-2
+step = 1e-5
