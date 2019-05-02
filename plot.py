@@ -1,6 +1,7 @@
 import numpy as np
 from numpy.linalg import norm
 from numpy import array as arr
+from numpy import sqrt, prod
 import matplotlib.pyplot as plt
 
 import parameters as par
@@ -9,7 +10,7 @@ from config import black_hole as permittivity
 
 
 def hamiltonian(position, kvector):
-    n = norm(permittivity(position))
+    n = sqrt(prod(permittivity(position)))
     return par.c * np.sqrt(np.dot(kvector, kvector)) / n
 
 
