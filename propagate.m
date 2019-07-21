@@ -1,5 +1,5 @@
 function [new_position, new_kvector] = propagate(position, kvector)
-    step = 2e-4
+    step = 2e-2;
     k1_k1 = partial_q(position, kvector, [step 0]);
     k1_k2 = partial_q(position, kvector, [0 step]);
     k1_k = -step * [k1_k1 k1_k2];

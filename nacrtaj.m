@@ -22,7 +22,7 @@ for it = 1:len
    kvector_arr = zeros(1e6, 2);
    position_arr(1,:)
    t = 1;
-   while norm(position) > .1
+   while norm(position) > 1 && position(1)<3 && position(2)<7
        [position, kvector] = propagate(position, kvector);
        position_arr(t,:) = position;
        kvector_arr(t,:) = kvector;
