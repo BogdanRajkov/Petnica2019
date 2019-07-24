@@ -1,47 +1,53 @@
+clc
+
 inputID = fopen('input.txt', 'r');
-name = fgetl(inputID);
-addpath(strcat('./', name));
 temp = fscanf(inputID, ' %d %d;', [2 Inf]);
 fclose(inputID);
 len = size(temp);
-temp = reshape(temp, [2 len(2)/2 2]);
-start_rays = temp(:, :, 1)';
-start_kvector = temp(:, :, 2)';
+start_par = reshape(temp, [2 len(2)/3 3]);
+start_par = cat(2, start_par, zeros(2, 100, 3));
 
-len = size(start_rays);
-len = len(1);
+len = len(2)/3;
+exit_intensity = 0;
 setup();
 
 tic;
 
 hold on;
-for it = 1:len
-   position = start_rays(it,:);
-   kvector = start_kvector(it,:);
-   position_arr = zeros(1e6, 2);
-   kvector_arr = zeros(1e6, 2);
-   position_arr(1,:)
-   t = 1;
-   while norm(position) > 1 && position(1)<3 && position(2)<7
-       [position, kvector] = propagate(position, kvector);
-       position_arr(t,:) = position;
-       kvector_arr(t,:) = kvector;
-       t = t + 1;
+while len > 0
+   intensity = start_par(:,len,1)';
+   position = start_par(:,len,2)'; 
+   kvector = start_par(:,len,3)';
+   len = len - 1;
+   if sum(intensity) < .05
+       continue
    end
-   plot(position_arr(1:t-1,1), position_arr(1:t-1,2));
+   rays = zrak(intensity, position, kvector);
+   if sum(size(rays)) > 2
+       len = len + 1;
+       start_par(:, len, :) = rays(:, :, 1);
+       len = len + 1;
+       start_par(:, len, :) = rays(:, :, 2);
+   elseif sum(size(rays)) == 2
+       exit_intensity = exit_intensity + rays;
+   end
 end
 hold off;
-saveas(gcf, strcat(datestr(now, 'yyyy-mm-dd HH:MM'), '.png'));
+saveas(gcf, strcat(char(39), 'rezultati', char(39), '/', datestr(now, 'yyyy-mm-dd HH-MM'), '.png'));
 
 timeElapsed = toc;
 
 %%
-outputID = fopen(strcat(datestr(now, 'yyyy-mm-dd HH:MM'), '.log'), 'w');
+outputID = fopen(strcat(char(39), 'rezultati', char(39), '/', datestr(now, 'yyyy-mm-dd HH-MM'), '.log'), 'w');
 fprintf(outputID, '---INPUT---\r\n\r\n');
-fprintf(outputID, strcat(name, '\r\n'));
-fprintf(outputID, ' %d %d;', start_rays');
+fprintf(outputID, ' %d %d;', start_par(:,:,1));
 fprintf(outputID, '\r\n');
-fprintf(outputID, ' %d %d;', start_kvector');
-fprintf(outputID, '\r\n\r\n---OUTPUT---\r\n\r\n');
+fprintf(outputID, ' %d %d;', start_par(:,:,2));
+fprintf(outputID, '\r\n');
+fprintf(outputID, ' %d %d;', start_par(:,:,3));
+fprintf(outputID, '\r\n');
+fprintf(outputID, '\r\n---OUTPUT---\r\n\r\n');
 fprintf(outputID, strcat('\r\nDuration: ', num2str(timeElapsed), ' s\r\n'));
 fclose(outputID);
+
+fprintf('done\r\n');

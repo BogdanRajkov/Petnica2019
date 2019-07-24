@@ -1,5 +1,5 @@
-function [new_position, new_kvector] = propagate(position, kvector)
-    step = 2e-2;
+function [new_intensity, new_position, new_kvector] = propagate(intensity, position, kvector)
+    step = 2e-5;
     k1_k1 = partial_q(position, kvector, [step 0]);
     k1_k2 = partial_q(position, kvector, [0 step]);
     k1_k = -step * [k1_k1 k1_k2];
@@ -24,6 +24,7 @@ function [new_position, new_kvector] = propagate(position, kvector)
     k4_q1 = partial_k(position + k3_q, kvector + k3_k, [step 0]);
     k4_q2 = partial_k(position + k3_q, kvector + k3_k, [0 step]);
     k4_q =  step * [k4_q1 k4_q2];
+    new_intensity = intensity;
     new_position = position + (k1_q + 2 * k2_q + 2 * k3_q + k4_q) / 6;
     new_kvector = kvector  + (k1_k + 2 * k2_k + 2 * k3_k + k4_k) / 6;
 end
