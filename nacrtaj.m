@@ -1,4 +1,5 @@
-clc
+clc;
+clear all;
 
 inputID = fopen('input.txt', 'r');
 temp = fscanf(inputID, ' %d %d;', [2 Inf]);
