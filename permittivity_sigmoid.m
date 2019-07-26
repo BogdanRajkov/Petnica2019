@@ -8,7 +8,7 @@ function [ perm ] = permittivity_sigmoid(position, n, r)
     diff = n*(A-B);
     
     x = norm(position);
-    sigm = sigmf(r, [20 x]);
+    sigm = sigmf(-r, [20 -x]);
     
-    perm = dot(diff, sigm);
+    perm = sum(diff.*sigm);
 end

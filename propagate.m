@@ -1,5 +1,5 @@
 function [new_intensity, new_position, new_kvector] = propagate(intensity, position, kvector)
-    step = 2e-6;
+    step = 2e-4;
     k1_k1 = partial_q(position, kvector, [step 0]);
     k1_k2 = partial_q(position, kvector, [0 step]);
     k1_k = -step * [k1_k1 k1_k2];
@@ -38,8 +38,6 @@ function [pder] = partial_k(position, kvector, delta)
 end
 
 function [haml] = hamiltonian(position, kvector)
-    n_arr = [1 5];
-    r_arr = [0 5];
-    n = sqrt(prod(permittivity_sigmoid(position, n_arr, r_arr)));
+    n = sqrt(prod(permittivity(position)));
     haml = norm(kvector) / n;
 end

@@ -20,7 +20,7 @@ function [rays] = zrak(intensity, position, kvector)
 %     end
 %     position = position + l * kvector;
     
-    while norm(position) > .1 && norm(position) < 7 && isequal(n1, sqrt(prod(permittivity(position))))
+    while norm(position) > .1 && norm(position) < 7 && sqrt(prod(permittivity(position))) < sqrt(4.99)
         t = t + 1; 
         [intensity, position, kvector] = propagate(intensity, position, kvector);
         position_arr(t,:) = position;
@@ -28,6 +28,9 @@ function [rays] = zrak(intensity, position, kvector)
     end
     hold on;
 %     plot(position_arr(1:t, 1), position_arr(1:t, 2));
+    if imag(position) ~= 0
+        fprintf('fuck');
+    end
     if ~isequal(n1, sqrt(prod(permittivity(position))))
         n2 = sqrt(prod(permittivity(position)));
         cosOi = dot(-start_kvector/norm(start_kvector), position/norm(position));

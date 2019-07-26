@@ -2,8 +2,8 @@ function test_numerika()
     clc;
         
     hold on;
-    y = linspace(0.1, 5, 501);
-    cosOt_arr = arrayfun(@(x) zrak([1 1], [-floor(sqrt(25-x^2)*100+1)/100 x], [1 0]), y, 'UniformOutput', false);
+    y = linspace(.1, 4.9, 49);
+    cosOt_arr = arrayfun(@(x) zrak([1 1], [-(floor(sqrt(25-x^2)*10)+1)/10 x], [1 0]), y, 'UniformOutput', false);
 
     save('kosinus.mat')
     plot(y, cellfun(@(x)x(1), cosOt_arr));
