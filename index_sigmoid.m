@@ -1,4 +1,4 @@
-function [ perm ] = permittivity_sigmoid(position, n, r)
+function [ perm ] = index_sigmoid(position, n, r)
     k = size(n);
     k = k(2);
     A = eye(k);
@@ -8,7 +8,7 @@ function [ perm ] = permittivity_sigmoid(position, n, r)
     diff = n*(A-B);
     
     x = norm(position);
-    sigm = sigmf(-r, [20 -x]);
+    sigm = sigmf(-r, [5 -x]);
     
     perm = sum(diff.*sigm);
 end

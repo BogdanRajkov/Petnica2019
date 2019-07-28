@@ -1,41 +1,43 @@
 function [rays] = zrak(intensity, position, kvector)
+    fprintf('%d %d\n', position);
     rays = zeros(2, 3, 2);
     start_kvector = kvector;
-    n1 = sqrt(prod(permittivity(position)));
+    n1 = index(position);
     position_arr = zeros(1e6, 2);
     kvector_arr = zeros(1e6, 2);
     t = 1;
     position_arr(t,:) = position;
     kvector_arr(t,:) = kvector;
     
-%     l = 0;
-%     h = 10;
-%     while h - l > 1e-2
-%         m = (l + h) / 2;
-%         if isequal(permittivity(position), permittivity(position + m * kvector))
-%             l = m;
-%         else
-%             h = m;
+    while norm(position) > .1 && norm(position) < 10 && index(position) < 4.99
+%         l = 0;
+%         h = 1;
+%         while h - l > 1e-4
+%             m = (l + h) / 2;
+%             if abs(index(position) - index(position + m * kvector)) < 1e-4
+%                 l = m;
+%             else
+%                 h = m;
+%             end
 %         end
-%     end
-%     position = position + l * kvector;
-    
-    while norm(position) > .1 && norm(position) < 7 && sqrt(prod(permittivity(position))) < sqrt(4.99)
+%         position = position + l * kvector;
+        
         t = t + 1; 
-        [intensity, position, kvector] = propagate(intensity, position, kvector);
+        [intensity, position, kvector] = propagate(intensity, position, kvector, 1e-4);
         position_arr(t,:) = position;
         kvector_arr(t,:) = kvector;
     end
     hold on;
+    plot(position_arr(1:t, 1), position_arr(1:t, 2));
 %     plot(position_arr(1:t, 1), position_arr(1:t, 2));
     if imag(position) ~= 0
         fprintf('fuck');
     end
-    if ~isequal(n1, sqrt(prod(permittivity(position))))
-        n2 = sqrt(prod(permittivity(position)));
+    if ~isequal(n1, index(position))
+        n2 = index(position);
         cosOi = dot(-start_kvector/norm(start_kvector), position/norm(position));
         cosOt = dot(-kvector/norm(kvector), position/norm(position));
-        rays = [cosOt, sqrt(1-(n1/n2*sqrt(1-cosOi^2))^2)];
+        rays = [sqrt(1-cosOt^2), n1/n2*sqrt(1-cosOi^2)];
     end
 %         Rs = ((n1*cosOi-n2*cosOt)/(n1*cosOi+n2*cosOt))^2;
 %         Rp = ((n1*cosOt-n2*cosOi)/(n1*cosOt+n2*cosOi))^2;
