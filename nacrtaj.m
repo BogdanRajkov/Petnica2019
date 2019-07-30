@@ -5,7 +5,9 @@ temp = fscanf(inputID, ' %d %d;', [2 Inf]);
 fclose(inputID);
 len = size(temp);
 start_par = reshape(temp, [2 len(2)/3 3]);
-start_par = cat(2, start_par, zeros(2, 100, 3));
+start_par = permute(start_par, [3 1 2]);
+n_arr = [1 2.5 5];
+r_arr = [5 2.5 0];
 
 len = len(2)/3;
 exit_intensity = 0;
@@ -15,21 +17,19 @@ tic;
 
 hold on;
 while len > 0
-   intensity = start_par(:,len,1)';
-   position = start_par(:,len,2)'; 
-   kvector = start_par(:,len,3)';
+   intensity = start_par(1, :, len);
+   position = start_par(2, :, len); 
+   kvector = start_par(3, :, len);
+   start_par(:, :, end) = [];
    len = len - 1;
    if sum(intensity) < .05
        continue
    end
-   rays = zrak(intensity, position, kvector);
-   if sum(size(rays)) > 2
-       len = len + 1;
-       start_par(:, len, :) = rays(:, :, 1);
-       len = len + 1;
-       start_par(:, len, :) = rays(:, :, 2);
-   elseif sum(size(rays)) == 2
-       exit_intensity = exit_intensity + rays;
+   [rays, ei] = zrak(intensity, position, kvector, n_arr, r_arr);
+   exit_intensity = exit_intensity + sum(ei);
+   start_par = cat(3, start_par, rays);
+   if ~isequal(rays, [])
+       len = len + size(rays, 3);
    end
 end
 hold off;
@@ -38,6 +38,12 @@ saveas(gcf, strcat(char(39), 'rezultati', char(39), '/', datestr(now, 'yyyy-mm-d
 timeElapsed = toc;
 
 %%
+
+inputID = fopen('input.txt', 'r');
+temp = fscanf(inputID, ' %d %d;', [2 Inf]);
+start_par = reshape(temp, [2 size(temp, 2)/3 3]);
+fclose(inputID);
+
 outputID = fopen(strcat(char(39), 'rezultati', char(39), '/', datestr(now, 'yyyy-mm-dd HH-MM'), '.log'), 'w');
 fprintf(outputID, '---INPUT---\r\n\r\n');
 fprintf(outputID, ' %d %d;', start_par(:,:,1));

@@ -1,5 +1,7 @@
 # Petnica2019
 
+trudio sam se da sve 'magiène brojeve' - tipa velièina stepa - deklarišem na poèetku koda, da se kasnije ne bi izgubili
+
 nacrtaj.m: uèitava niz zrakova (intenzitet, polozaj, kvector) iz input.txt i pokreæe zrak() dok god se svi zraci ne izsimuliraju
 
 zrak.m: za jedan zrak, simulira i plotuje njegovu putanju, i vraæa dva nova zraka kada se zrak prelomi/odbije
@@ -22,3 +24,8 @@ TO-DO:
 1)Dinamièki step (bitno je zbog vremena izvršavanja simulacije)
 2)Iskucati fju koja poziva zrak() 20tak puta, i sabira intenzitet koji izlazi (raèuna efikasnost)
 3)Pustiti simulaciju :)	
+
+Spisak parametara:
+1)tolerance
+2)min_step
+3)

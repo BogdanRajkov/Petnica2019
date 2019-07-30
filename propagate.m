@@ -1,8 +1,4 @@
-function [new_intensity, new_position, new_kvector] = propagate(intensity, position, kvector, tolerance)
-    korak = 1;
-    while korak * norm(partial_q(position, kvector, korak)) >= tolerance && korak > 2^-25
-        korak = korak / 2;
-    end
+function [new_intensity, new_position, new_kvector] = propagate(intensity, position, kvector)
     k1_k = -korak * partial_q(position, kvector, korak);
     k1_q =  korak * partial_k(position, kvector, korak);
     k2_k = -korak * partial_q(position + k1_q/2, kvector + k1_k/2, korak);

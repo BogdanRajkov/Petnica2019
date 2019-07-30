@@ -1,10 +1,11 @@
-function perm = index(position)
-    n_arr = [1 5];
-    r_arr = [5 -10];
-    perm = index_sigmoid(position, n_arr, r_arr);
-%     if norm(position) > r_arr(1)
-%         perm = n_arr(1);
-%     elseif norm(position) > r_arr(2)
-%         perm = n_arr(2);
-%     end
+function out = index(position, n_arr, r_arr)
+    i = 1;
+    x = norm(position);
+    while i > 0
+        if x >= r_arr(i)
+            out = n_arr(i);
+            break
+        end
+        i = i + 1;
+    end
 end
