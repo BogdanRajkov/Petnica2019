@@ -1,0 +1,12 @@
+---INPUT---
+
+2
+ 2.5 5; 2 2;
+
+---OUTPUT---
+
+Optimal x: 1.876516e+00 3.518681e+00; 2.648524e+00 2.351294e+00;
+Function minimum: 6.170836e-01
+Did the search converge: 1
+
+Duration:0 s

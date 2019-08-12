@@ -1,0 +1,12 @@
+---INPUT---
+
+N# of layers: 2
+Layer refractive indices and thicknesses 8, 8, 2.400000e+00,
+
+---OUTPUT---
+
+Optimal x: 8, 8, 2.400000e+00,
+Function minimum: 8.064227e-01
+Did the search converge: 1
+
+Duration:3492.4585 s

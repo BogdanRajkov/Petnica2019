@@ -50,6 +50,10 @@ function [rays, intensity] = zrak(intensity, position, kvector, n_arr, r_arr)
                 intensity = [1-Rs 1-Rp] .* intensity;
             end
         end
+        
+        if sum(intensity) < .01
+            return;
+        end
 %         t = t + 1; 
 %         position_arr(t,:) = position;
 %         kvector_arr(t,:) = kvector;

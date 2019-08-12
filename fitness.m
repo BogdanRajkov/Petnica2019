@@ -1,8 +1,27 @@
 function out = fitness(n_arr, r_arr)
 %     tic;
     
-    n_arr = cat(2, 1, n_arr);
-    r_arr = cat(2, r_arr, 0);
+    n_scale = 1;
+    n_arr = cat(2, 1, n_scale*n_arr);
+    if ~(all(n_arr <= 10) && all(n_arr >= 1))
+        fprintf('Indices out of bounds\n');
+        out = 1;
+        return;
+    end
+    
+    r_arr = cat(2, 5, r_arr, 0);
+    if ~all(r_arr(1:size(r_arr, 2)-1) - r_arr(2:size(r_arr, 2)) > 0)
+        fprintf('Radii not increasing\n')
+        out = 1;
+        return;
+    end
+    
+    if r_arr(2) > 5
+        fprintf('Sphere too big\n')
+        out = 1;
+        return;
+    end
+    
     start_par = [];
     for i = 0.1:0.01:5
         start_par = cat(3, start_par, [1 1; -5 i; 1 0]);
@@ -31,4 +50,4 @@ function out = fitness(n_arr, r_arr)
     out = out / scale_factor;
     
 %     timeElapsed = toc;
-    fprintf('out = %d\n', out);
+%     fprintf('out = %d\n', out);
