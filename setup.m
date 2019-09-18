@@ -1,6 +1,7 @@
-function [] = setup()
+function [] = setup(r_arr)
     hold on;
     phi = 0:pi/50:2*pi;
-    plot(5*cos(phi), 5*sin(phi), 'k');
-    plot(2.5*cos(phi), 2.5*sin(phi), 'k');
+    for i = 1:size(r_arr, 1)
+        plot(r_arr(i)*sin(phi), r_arr(i)*cos(phi), 'k');
+    end
 end

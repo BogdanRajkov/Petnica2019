@@ -1,18 +1,17 @@
 function [rays, intensity] = zrak(intensity, position, kvector, n_arr, r_arr)
     error = 2^-25;
-    min_position = .1;
     max_position = 10;
     gamma = 5e-2;
 
 %     fprintf('%.3d %.3d\n', position);
     rays = [];
-%     position_arr = zeros(1e6, 2);
-%     kvector_arr = zeros(1e6, 2);
-%     t = 1;
-%     position_arr(t,:) = position;
-%     kvector_arr(t,:) = kvector;
+    position_arr = zeros(1e6, 2);
+    kvector_arr = zeros(1e6, 2);
+    t = 1;
+    position_arr(t,:) = position;
+    kvector_arr(t,:) = kvector;
     
-    while norm(position) > min_position && norm(position) < max_position
+    while norm(position) < max_position
         n1 = index(position, n_arr, r_arr);
         l = 0;
         h = .1;
@@ -46,7 +45,7 @@ function [rays, intensity] = zrak(intensity, position, kvector, n_arr, r_arr)
                 cosOt = abs(dot(kvector / norm(kvector), er));
                 Rs = ((n1*cosOi-n2*cosOt)/(n1*cosOi+n2*cosOt))^2;
                 Rp = ((n1*cosOt-n2*cosOi)/(n1*cosOt+n2*cosOi))^2;
-                rays = cat(3, rays, [[Rs Rp] .* intensity; position - (h-l) * kvector; -kr * er + kt *et]);
+                rays = cat(3, rays, [[Rs Rp] .* intensity; position - (h-l) * kvector; -kr * er + kt *et]');
                 intensity = [1-Rs 1-Rp] .* intensity;
             end
         end
@@ -54,23 +53,13 @@ function [rays, intensity] = zrak(intensity, position, kvector, n_arr, r_arr)
         if sum(intensity) < .01
             return;
         end
-%         t = t + 1; 
-%         position_arr(t,:) = position;
-%         kvector_arr(t,:) = kvector;
+        t = t + 1; 
+        position_arr(t,:) = position;
+        kvector_arr(t,:) = kvector;
     end
-%     hold on;
-%     plot(position_arr(1:t, 1), position_arr(1:t, 2));
-%     plot(position_arr(1:t, 1), position_arr(1:t, 2));
-%     if imag(position) ~= 0
-%         fprintf('fuck');
-%     end
-%         rays(:, 1, 1) = [Rs 0; 0 Rp] * intensity';
-%         rays(:, 2, 1) = position';
-%         rays(:, 3, 1) = start_kvector' - 2*dot(start_kvector, position/norm(position))*position'/norm(position);
-%         rays(:, 1, 2) = [1-Rs 0; 0 1-Rp] * intensity';
-%         rays(:, 2, 2) = position';
-%         rays(:, 3, 2) = kvector';
-%     elseif norm(position) >= 7
-%         rays = sum(intensity);
-%     end
+    hold on;
+    plot(position_arr(1:t, 1), position_arr(1:t, 2));
+    plot(position_arr(1:t, 1), position_arr(1:t, 2));
+    xlim([-5 5]);
+    ylim([-5 5]);
 end

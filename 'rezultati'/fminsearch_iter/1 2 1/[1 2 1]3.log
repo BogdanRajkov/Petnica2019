@@ -1,0 +1,13 @@
+---INPUT---
+
+N# of layers: 3
+Layer refractive indices and thicknesses 1.702642e+00, 1.702642e+00, 1.264196e+00, 2.587160e+00, 1.743207e-01,
+Point from which simulation began 1, 2, 1,
+
+---OUTPUT---
+
+Optimal x: 1.621721e+00, 1.883491e+00, 1.134417e+00, 3.042394e+00, 1.716462e-01,
+Function minimum: 6.248563e-01
+Did the search converge: 1
+
+Duration:4521.5932 s
