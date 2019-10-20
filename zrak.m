@@ -5,11 +5,11 @@ function [rays, intensity] = zrak(intensity, position, kvector, n_arr, r_arr)
 
 %     fprintf('%.3d %.3d\n', position);
     rays = [];
-    position_arr = zeros(1e6, 2);
-    kvector_arr = zeros(1e6, 2);
-    t = 1;
-    position_arr(t,:) = position;
-    kvector_arr(t,:) = kvector;
+%     position_arr = zeros(1e6, 2);
+%     kvector_arr = zeros(1e6, 2);
+%     t = 1;
+%     position_arr(t,:) = position;
+%     kvector_arr(t,:) = kvector;
     
     while norm(position) < max_position
         n1 = index(position, n_arr, r_arr);
@@ -53,13 +53,13 @@ function [rays, intensity] = zrak(intensity, position, kvector, n_arr, r_arr)
         if sum(intensity) < .01
             return;
         end
-        t = t + 1; 
-        position_arr(t,:) = position;
-        kvector_arr(t,:) = kvector;
+%         t = t + 1; 
+%         position_arr(t,:) = position;
+%         kvector_arr(t,:) = kvector;
     end
     hold on;
-    plot(position_arr(1:t, 1), position_arr(1:t, 2));
-    plot(position_arr(1:t, 1), position_arr(1:t, 2));
-    xlim([-5 5]);
-    ylim([-5 5]);
+%     plot(position_arr(1:t, 1), position_arr(1:t, 2));
+%     plot(position_arr(1:t, 1), position_arr(1:t, 2));
+%     xlim([-5 5]);
+%     ylim([-5 5]);
 end

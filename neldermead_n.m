@@ -1,4 +1,4 @@
-function x = neldermead(k, x0, pos)
+function x = neldermead_n(k, x0, r_arr)
 tic;
 
 % k = 3;
@@ -7,15 +7,14 @@ options = optimset('fminsearch');
 options = optimset(options, 'Display', 'iter', ...
                    'PlotFcns', @optimplotfval, ...
                    'TolFun', 1e-2, 'TolX', 2e-3);
-[x, fval, exitflag, ~] = fminsearch(@(x) fitness(x(1:k)', x(k+1:2*k-1)'), x0, options);
-x = x(1:k);
-save('neldermead.mat');
+[x, fval, exitflag, ~] = fminsearch(@(x) fitness(x', r_arr), x0, options);
 
 timeElapsed = toc;
+save('neldermead.mat');
 
 %%
 
-outputID = fopen(strcat(char(39), 'rezultati', char(39), '/fminsearch_iter/', mat2str(pos), ' ', num2str(k), '.log'), 'w');
+outputID = fopen(strcat(char(39), 'rezultati', char(39), '/fminsearch_n/n', num2str(k), '.log'), 'w');
 fprintf(outputID, '---INPUT---\r\n\r\n');
 fprintf(outputID, 'n# of layers: %d\r\n', k);
 fprintf(outputID, '\r\n\r\n---OUTPUT---\r\n\r\nOptimal x:');
