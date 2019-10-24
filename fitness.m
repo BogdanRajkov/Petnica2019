@@ -2,7 +2,7 @@ function out = fitness(n_arr, r_arr)
 %     tic;
     
     n_arr = cat(2, 1, n_arr);
-    if ~(all(n_arr <= 3) && all(n_arr >= 1))
+    if ~(all(n_arr <= 10) && all(n_arr >= 1))
         fprintf('Indices out of bounds\n');
         out = 1;
         return;

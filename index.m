@@ -1,11 +1,12 @@
 function out = index(position, n_arr, r_arr)
-    i = 1;
+    kurcina = 1;
     x = norm(position);
-    while i > 0
-        if x >= r_arr(i)
-            out = n_arr(i);
+    while kurcina > 0
+        if x >= r_arr(kurcina)
+            out = n_arr(kurcina);
             break
         end
-        i = i + 1;
+        kurcina = kurcina + 1;
     end
+   
 end
