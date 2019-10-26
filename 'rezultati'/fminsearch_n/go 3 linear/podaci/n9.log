@@ -1,0 +1,12 @@
+---INPUT---
+
+n# of layers: 9
+
+
+---OUTPUT---
+
+Optimal x: 1.125097e+00, 1.383110e+00, 1.560300e+00, 1.758573e+00, 2.031857e+00, 2.324015e+00, 2.614512e+00, 2.634162e+00, 2.850663e+00,
+Function minimum: 5.725097e-01
+Did the search converge: 1
+
+Duration:1711.1045 s
